@@ -1,24 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import GameTable from './components/GameTable';
 
 function App() {
+
+  const game = [["#32a852",undefined,"#32a852"],["#1532eb","#32a852",undefined],["#1532eb","#32a852","#1532eb"]];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="page">
+      <GameTable matrix={game} />
     </div>
   );
 }
