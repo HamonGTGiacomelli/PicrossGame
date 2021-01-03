@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+import Container from "../view/Container";
+import Header from "../view/Header";
 
 const MainPage = () => {
-    return (
-        <div>
-            <h1>MainPage</h1>
-        </div>
-    )
-}
+  return (
+    <Container>
+      <Header>Games</Header>
+    </Container>
+  );
+};
 
-export default MainPage
+export default MainPage;
