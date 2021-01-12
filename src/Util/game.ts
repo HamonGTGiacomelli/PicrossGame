@@ -1,45 +1,41 @@
-export const calculateRowColTips = (
-  gameboard: (string | undefined)[][]
-): [number[][], number[][]] => {
-  const rowTips: number[][] = new Array(gameboard.length)
-    .fill([])
-    .map((row) => []);
-  const colTips: number[][] = new Array(gameboard[0].length)
-    .fill([])
-    .map((col) => []);
+import { GameBoardStatusType, GameBoardType, GAME_STATE } from "../types";
+import { createNewArray } from "./array";
+export class Game {
+    boardTemplate: GameBoardType;
+    boardStatus: GameBoardStatusType;
 
-  const rowAux = new Array(gameboard.length).fill(0);
-  const colAux = new Array(gameboard[0].length).fill(0);
+    constructor(boardTemplate: GameBoardType) {
+        this.boardTemplate = boardTemplate;
+        this.boardStatus = createNewArray<GAME_STATE>(this.boardTemplate.length, this.boardTemplate[0].length, GAME_STATE.HIDDEN);
+    }
 
-  for (let i = 0; i < gameboard.length; i++) {
-    for (let j = 0; j < gameboard[i].length; j++) {
-      if (gameboard[i][j]) {
-        rowAux[i] = rowAux[i] + 1;
-        colAux[j] = colAux[j] + 1;
-      } else {
-        if (rowAux[i] > 0) {
-          rowTips[i].push(rowAux[i]);
-          rowAux[i] = 0;
+    startGame() {
+        this.resetBoardStatus();
+    }
+
+    resetBoardStatus() {
+        this.boardStatus = createNewArray<GAME_STATE>(this.boardTemplate.length, this.boardTemplate[0].length, GAME_STATE.HIDDEN);
+    }
+
+    play(row: number, column: number): boolean {
+        if (!this.validatePlay(row, column)) {
+            return false;
         }
-        if (colAux[j] > 0) {
-          colTips[j].push(colAux[j]);
-          colAux[j] = 0;
+        if (this.boardTemplate[row][column]) {
+            this.boardStatus[row][column] = GAME_STATE.HIT;
+        } else {
+            this.boardStatus[row][column] = GAME_STATE.MISS;
         }
-      }
+        return true;
     }
-  }
 
-  rowAux.forEach((row, index) => {
-    if (row > 0) {
-      rowTips[index].push(row);
+    private validatePlay(row: number, column: number): boolean {
+        if (row >= this.boardTemplate.length || column >= this.boardTemplate[0].length) {
+            return false;
+        }
+        if (this.boardStatus[row][column] !== GAME_STATE.HIDDEN) {
+            return false;
+        }
+        return true;
     }
-  });
-
-  colAux.forEach((col, index) => {
-    if (col > 0) {
-      colTips[index].push(col);
-    }
-  });
-
-  return [rowTips, colTips];
-};
+}

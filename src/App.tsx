@@ -6,24 +6,24 @@ import MainPage from "./pages/MainPage";
 import "./App.css";
 
 const App: React.FunctionComponent = () => {
-  return (
-    <div>
-      <BrowserRouter>
-        <NavBar />
-        <Switch>
-          <Route exact path="/">
-            <MainPage />
-          </Route>
-          <Route path="/create">
-            <CreateBoard />
-          </Route>
-          <Route>
-            <div>Not Found</div>
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    </div>
-  );
+    return (
+        <div>
+            <BrowserRouter>
+                <NavBar />
+                <Switch>
+                    <Route exact path="/">
+                        <MainPage />
+                    </Route>
+                    <Route path="/create">
+                        <CreateBoard />
+                    </Route>
+                    <Route>
+                        <div>Not Found</div>
+                    </Route>
+                </Switch>
+            </BrowserRouter>
+        </div>
+    );
 };
 
 export default App;
